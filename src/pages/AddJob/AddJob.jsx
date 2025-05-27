@@ -1,16 +1,41 @@
 import React from "react";
+import Swal from "sweetalert2";
+import useAuth from "../../hooks/useAuth";
 
 const AddJob = () => {
-      const handleAddJob = e => {
-            e.preventDefault();
-            const formData = new FormData(e.target);
-            const initialData = Object.fromEntries(formData.entries());
-            console.log(initialData);
-            const {min, max, currency, ...newJob} = initialData;
-            console.log(newJob);
-            newJob.salaryRange = {min, max, currency}
-            console.log(newJob);
-      }
+      const {user} =useAuth()
+  const handleAddJob = (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const initialData = Object.fromEntries(formData.entries());
+    // console.log(initialData);
+    const { min, max, currency, ...newJob } = initialData;
+    console.log(newJob);
+    newJob.salaryRange = { min, max, currency };
+    newJob.requirements = newJob.requirements.split("/n");
+    newJob.responsibilities = newJob.responsibilities.split("/n");
+    console.log(newJob);
+    fetch("http://localhost:5000/jobs", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(newJob),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.insertedId) {
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Job has been added has been added",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          navigate("/myApplications");
+        }
+      });
+  };
   return (
     <div>
       <h2 className="text-3xl mb-6">Post a new Job</h2>
@@ -39,7 +64,10 @@ const AddJob = () => {
 
               {/* job type */}
               <label className="label">Job Type</label>
-              <select className="select select-ghost w-full" defaultValue="">
+              <select
+                defaultValue="Pick a Job Type"
+                className="select select-ghost w-full"
+              >
                 <option disabled value="">
                   Pick a Job Type
                 </option>
@@ -50,7 +78,10 @@ const AddJob = () => {
 
               {/* job Category */}
               <label className="label">Job Field</label>
-              <select className="select select-ghost w-full" defaultValue="">
+              <select
+                className="select select-ghost w-full"
+                defaultValue=" Pick a Job Field"
+              >
                 <option disabled value="">
                   Pick a Job Field
                 </option>
@@ -77,7 +108,7 @@ const AddJob = () => {
               <select
                 name="currency"
                 className="select select-ghost w-full"
-                defaultValue=""
+                defaultValue="Currency"
               >
                 <option disabled value="">
                   Currency
@@ -121,6 +152,7 @@ const AddJob = () => {
                 className="input w-full"
                 placeholder="hr@example.com"
                 name="hr_email"
+                defaultValue={user?.email}
               />
 
               {/* job description */}
