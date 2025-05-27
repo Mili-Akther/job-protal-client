@@ -4,12 +4,12 @@ import Home from "../pages/Home/Home";
 import Register from "../pages/Register/Register";
 import SignIn from "../pages/signIn/SignIn";
 import JobDetails from "../pages/JobDetails/JobDetails";
-import PrivateRoute from "./Privateroute";
 import JobApply from "../pages/jobApply/JobApply";
 import MyApplication from "../pages/MyApplication/MyApplication";
 import AddJob from "../pages/AddJob/AddJob";
 import MyPostedJobs from "../pages/MyPostedJobs/MyPostedJobs";
 import ViewApplication from "../pages/ViewApplication/ViewApplication";
+import PrivateRoute from "./Privateroute";
 
 const router = createBrowserRouter([
   {
