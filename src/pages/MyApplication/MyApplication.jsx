@@ -9,19 +9,19 @@ const MyApplication = () => {
   const axiosSecure = useAxiosSecure();
 
   useEffect(() => {
-    // fetch(`http://localhost:5000/job-application?email=${user.email}`)
+    // fetch(`https://job-protal-server-zeta.vercel.app/job-application?email=${user.email}`)
     //   .then((res) => res.json())
     //   .then((data) => setJobs(data));
 
     // axios
-    //   .get(`http://localhost:5000/job-application?email=${user.email}`, {
+    //   .get(`https://job-protal-server-zeta.vercel.app/job-application?email=${user.email}`, {
     //     withCredentials: true
     //   })
     //   .then((res) =>console.log( setJobs(res.data)));
 
-    axiosSecure.get(`/job-application?email=${user.email}`)
-    .then(res => setJobs(res.data))
-
+    axiosSecure
+      .get(`/job-application?email=${user.email}`)
+      .then((res) => setJobs(res.data));
   }, [user.email]);
   return (
     <div>
@@ -38,7 +38,7 @@ const MyApplication = () => {
               </th>
               <th>Name</th>
               <th>Job</th>
-              <th>Favorite Color</th>
+              <th>Favorite jobs</th>
               <th></th>
             </tr>
           </thead>

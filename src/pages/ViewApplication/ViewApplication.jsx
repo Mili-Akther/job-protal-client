@@ -11,7 +11,7 @@ const ViewApplication = () => {
 
     console.log("Selected status:", data.status);
 
-    fetch(`http://localhost:5000/job-applications/${id}`, {
+    fetch(`https://job-protal-server-zeta.vercel.app/job-applications/${id}`, {
       method: "PATCH",
       headers: {
         "content-type": "application/json",
@@ -31,8 +31,6 @@ const ViewApplication = () => {
         }
       });
   };
-  
-  
 
   return (
     <div>

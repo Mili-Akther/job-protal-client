@@ -1,4 +1,4 @@
-import { createBrowserRouter} from "react-router-dom";
+import { createBrowserRouter } from "react-router-dom";
 import MainLayout from "../layout/MainLayout";
 import Home from "../pages/Home/Home";
 import Register from "../pages/Register/Register";
@@ -29,7 +29,7 @@ const router = createBrowserRouter([
           </PrivateRoute>
         ),
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/jobs/${params.id}`),
+          fetch(`https://job-protal-server-zeta.vercel.app/jobs/${params.id}`),
       },
       {
         path: "/jobApply/:id",
@@ -65,12 +65,15 @@ const router = createBrowserRouter([
       },
       {
         path: "viewApplication/:job_id",
-        element: 
+        element: (
           <PrivateRoute>
             <ViewApplication></ViewApplication>
-          </PrivateRoute>,
-          loader:({params}) => fetch(`http://localhost:5000/job-applications/jobs/${params.job_id}`)
-     
+          </PrivateRoute>
+        ),
+        loader: ({ params }) =>
+          fetch(
+            `https://job-protal-server-zeta.vercel.app/job-applications/jobs/${params.job_id}`
+          ),
       },
       {
         path: "register",

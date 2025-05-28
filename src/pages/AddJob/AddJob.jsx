@@ -4,8 +4,8 @@ import useAuth from "../../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 
 const AddJob = () => {
-      const {user} =useAuth()
-      const navigate = useNavigate();
+  const { user } = useAuth();
+  const navigate = useNavigate();
   const handleAddJob = (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
@@ -17,7 +17,7 @@ const AddJob = () => {
     newJob.requirements = newJob.requirements.split("/n");
     newJob.responsibilities = newJob.responsibilities.split("/n");
     console.log(newJob);
-    fetch("http://localhost:5000/jobs", {
+    fetch("https://job-protal-server-zeta.vercel.app/jobs", {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -163,7 +163,6 @@ const AddJob = () => {
                 className="input w-full"
                 placeholder="Deadline"
                 name="applicationDeadline"
-          
               />
 
               {/* job description */}

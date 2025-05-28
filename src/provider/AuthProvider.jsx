@@ -21,53 +21,54 @@ const AuthProvider = ({ children }) => {
     return createUserWithEmailAndPassword(auth, email, password);
   };
 
-
   const signInWithGoogle = () => {
-      setLoading(true);
-      return signInWithPopup(auth, googleProvider);
-  }
+    setLoading(true);
+    return signInWithPopup(auth, googleProvider);
+  };
 
+  const signInUser = (email, password) => {
+    setLoading(true);
+    return signInWithEmailAndPassword(auth, email, password);
+  };
 
-   const signInUser = (email, password) => {
-      setLoading (true);
-      return signInWithEmailAndPassword(auth, email, password);
-   }
-
-   const signOutUser = () => {
-      setLoading (true);
-      return signOut(auth);
-   }
+  const signOutUser = () => {
+    setLoading(true);
+    return signOut(auth);
+  };
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
-      console.log('state capture', currentUser?.email);
-      if(currentUser?.email){
-        const user = {email: currentUser.email};
+      console.log("state capture", currentUser?.email);
+      if (currentUser?.email) {
+        const user = { email: currentUser.email };
 
-        axios.post("http://localhost:5000/jwt", user, {withCredentials: true})
-        .then(res => {
-          console.log('login token',res.data)
-          setLoading(false);
-        })
+        axios
+          .post("https://job-protal-server-zeta.vercel.app/jwt", user, {
+            withCredentials: true,
+          })
+          .then((res) => {
+            console.log("login token", res.data);
+            setLoading(false);
+          });
+      } else {
+        axios
+          .post(
+            "https://job-protal-server-zeta.vercel.app/logout",
+            {},
+            {
+              withCredentials: true,
+            }
+          )
+          .then((res) => {
+            console.log("logout", res.data);
+            setLoading(false);
+          });
       }
-      else{
-        axios.post("http://localhost:5000/logout",{},{
-          withCredentials: true
-        })
-        .then(res=> {
-          console.log('logout', res.data)
-          setLoading(false);
-        })
-      }
-
-      
-
     });
-    return () =>{
+    return () => {
       unsubscribe();
-    }
-
+    };
   });
 
   const authInfo = {
